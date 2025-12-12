@@ -45,7 +45,7 @@ export function GameHistory({ stats }: GameHistoryProps) {
       <CardContent className="p-0 flex-1 overflow-hidden">
         <ScrollArea className="h-full">
           <div className="p-4 space-y-3">
-            {stats.gamesHistory
+                {stats.gamesHistory
               .slice()
               .reverse()
               .map((game, idx) => {
@@ -53,15 +53,15 @@ export function GameHistory({ stats }: GameHistoryProps) {
                 return (
                   <div
                     key={game.gameNumber}
-                    className={`relative flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-200 hover:scale-[1.02] group ${
+                    className={`relative flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all duration-200 hover:scale-[1.02] group ${
                       game.winner === "red"
                         ? "bg-[var(--red-team)]/5 border-[var(--red-team)]/40 hover:shadow-lg hover:shadow-[var(--red-team)]/20"
                         : "bg-[var(--blue-team)]/5 border-[var(--blue-team)]/40 hover:shadow-lg hover:shadow-[var(--blue-team)]/20"
                     } ${isRecent ? 'border-[3px]' : ''}`}
                   >
                     {/* Game Number Badge */}
-                    <div className="flex items-center gap-3">
-                      <div className={`flex items-center justify-center w-10 h-10 rounded-xl text-xs font-bold shadow-md ${
+                    <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                      <div className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold shadow-md shrink-0 ${
                         game.winner === "red"
                           ? "bg-gradient-to-br from-[var(--red-team)] to-red-600 text-white"
                           : "bg-gradient-to-br from-[var(--blue-team)] to-blue-600 text-white"
@@ -70,22 +70,22 @@ export function GameHistory({ stats }: GameHistoryProps) {
                       </div>
                       
                       {/* Game Details */}
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
                           <Trophy
-                            className={`h-4 w-4 ${game.winner === "red" ? "text-[var(--red-team)]" : "text-[var(--blue-team)]"}`}
+                            className={`h-3 w-3 sm:h-4 sm:w-4 shrink-0 ${game.winner === "red" ? "text-[var(--red-team)]" : "text-[var(--blue-team)]"}`}
                           />
-                          <span className="text-sm font-bold text-foreground">
+                          <span className="text-xs sm:text-sm font-bold text-foreground truncate">
                             {game.winner === "red" ? game.redTeamModel : game.blueTeamModel}
                           </span>
                         </div>
-                        <div className="text-xs text-muted-foreground flex items-center gap-2">
-                          <span className="flex items-center gap-1">
-                            <Activity className="h-3 w-3" />
-                            {game.turns} turns
+                        <div className="text-[10px] sm:text-xs text-muted-foreground flex items-center gap-1.5 sm:gap-2">
+                          <span className="flex items-center gap-0.5 sm:gap-1">
+                            <Activity className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+                            {game.turns}
                           </span>
-                          <span>•</span>
-                          <span className="flex items-center gap-1">
+                          <span className="hidden sm:inline">•</span>
+                          <span className="hidden sm:flex items-center gap-1">
                             <Clock className="h-3 w-3" />
                             {(game.duration / 1000).toFixed(1)}s
                           </span>
@@ -95,7 +95,7 @@ export function GameHistory({ stats }: GameHistoryProps) {
                     
                     {/* Winner Badge */}
                     <div
-                      className={`px-4 py-2 rounded-lg text-xs font-bold shadow-md ${
+                      className={`px-2 sm:px-4 py-1 sm:py-2 rounded-md sm:rounded-lg text-[10px] sm:text-xs font-bold shadow-md shrink-0 ${
                         game.winner === "red"
                           ? "bg-gradient-to-r from-[var(--red-team)] to-red-600 text-white"
                           : "bg-gradient-to-r from-[var(--blue-team)] to-blue-600 text-white"

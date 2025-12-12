@@ -25,10 +25,9 @@ export function GameControls({
   onBlueModelChange,
 }: GameControlsProps) {
   return (
-    <div className="w-full bg-card/60 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-lg">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+    <div className="w-full bg-card/60 backdrop-blur-xl border border-white/20 rounded-2xl p-4 sm:p-6 shadow-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 items-end">
         
-
 
         {/* Red Team Model */}
         <div className="space-y-2">
@@ -65,16 +64,16 @@ export function GameControls({
         </div>
         
         {/* Playback Controls */}
-        <div className="md:col-span-2 flex items-center gap-4">
+        <div className="sm:col-span-2 flex items-center gap-3 sm:gap-4">
             <Button 
                 onClick={onPlayPause} 
-                className={`flex-1 h-10 font-semibold shadow-md transition-all ${isPlaying ? 'bg-amber-500 hover:bg-amber-600 text-white' : 'bg-primary hover:bg-primary/90 text-primary-foreground hover:scale-[1.02]'}`}
+                className={`flex-1 h-10 font-semibold shadow-md transition-all text-sm sm:text-base ${isPlaying ? 'bg-amber-500 hover:bg-amber-600 text-white' : 'bg-primary hover:bg-primary/90 text-primary-foreground hover:scale-[1.02]'}`}
             >
               {isPlaying ? <Pause className="h-4 w-4 mr-2" /> : <Play className="h-4 w-4 mr-2 fill-current" />}
               {isPlaying ? "Pause" : "Start Game"}
             </Button>
             
-            <Button onClick={onReset} variant="outline" size="icon" className="h-10 w-10 border-2 hover:bg-destructive/5 hover:text-destructive hover:border-destructive/30 transition-colors">
+            <Button onClick={onReset} variant="outline" size="icon" className="h-10 w-10 border-2 hover:bg-destructive/5 hover:text-destructive hover:border-destructive/30 transition-colors shrink-0">
               <RotateCcw className="h-4 w-4" />
             </Button>
         </div>

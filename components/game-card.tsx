@@ -47,7 +47,7 @@ export function GameCard({ card, showIdentity, onClick, disabled }: GameCardProp
       onClick={onClick}
       disabled={disabled || card.revealed}
       className={cn(
-        "relative flex aspect-[2.5/1] items-center justify-center rounded-lg border-2 p-2 text-center font-semibold transition-all shadow-sm",
+        "relative flex aspect-[2.5/1] items-center justify-center rounded-md sm:rounded-lg border-2 p-1.5 sm:p-2 text-center font-semibold transition-all shadow-sm",
         getCardColor(),
         !disabled && !card.revealed && "hover:scale-105 hover:shadow-lg hover:-translate-y-0.5 cursor-pointer",
         card.revealed && "opacity-90 contrast-125",
@@ -56,7 +56,7 @@ export function GameCard({ card, showIdentity, onClick, disabled }: GameCardProp
     >
       <span
         className={cn(
-          "text-xs font-bold leading-tight tracking-tight md:text-sm transition-colors uppercase truncate w-full px-1",
+          "text-[10px] sm:text-xs md:text-sm font-bold leading-tight tracking-tight transition-colors uppercase truncate w-full px-0.5 sm:px-1",
           card.revealed && ["red", "blue", "assassin"].includes(card.type) ? "text-white drop-shadow-sm" : "text-foreground",
           card.revealed && card.type === "neutral" && "text-foreground/70"
         )}
@@ -64,8 +64,8 @@ export function GameCard({ card, showIdentity, onClick, disabled }: GameCardProp
         {card.type === "assassin" && "💣 "}{card.word}
       </span>
       {card.revealed && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg">
-          <div className="h-full w-full border-2 border-foreground/20 rounded-lg" />
+        <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-md sm:rounded-lg">
+          <div className="h-full w-full border-2 border-foreground/20 rounded-md sm:rounded-lg" />
         </div>
       )}
     </button>

@@ -36,40 +36,40 @@ export function Leaderboard({ stats }: LeaderboardProps) {
                             return (
                                 <div 
                                     key={stat.modelId} 
-                                    className={`flex items-center justify-between p-4 hover:bg-muted/50 transition-all duration-200 group ${
+                                    className={`flex items-center justify-between p-3 sm:p-4 hover:bg-muted/50 transition-all duration-200 group ${
                                         isTop3 ? 'bg-muted/30' : ''
                                     }`}
                                 >
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                                         {/* Rank Badge */}
-                                        <div className={`relative w-8 h-8 rounded-xl flex items-center justify-center text-sm font-bold shadow-lg transition-transform group-hover:scale-110 ${
+                                        <div className={`relative w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform group-hover:scale-110 shrink-0 ${
                                             index === 0 ? "bg-gradient-to-br from-yellow-400 to-amber-500 text-white" :
                                             index === 1 ? "bg-gradient-to-br from-gray-300 to-gray-400 text-gray-800" :
                                             index === 2 ? "bg-gradient-to-br from-amber-600 to-amber-700 text-white" :
                                             "bg-muted text-muted-foreground border-2 border-border"
                                         }`}>
-                                            {index === 0 && <Crown className="h-4 w-4 absolute -top-2 -right-2 text-yellow-400" />}
+                                            {index === 0 && <Crown className="h-3 w-3 sm:h-4 sm:w-4 absolute -top-1.5 sm:-top-2 -right-1.5 sm:-right-2 text-yellow-400" />}
                                             {index + 1}
                                         </div>
                                         
                                         {/* Model Info */}
-                                        <div>
-                                            <div className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">
+                                        <div className="min-w-0">
+                                            <div className="text-xs sm:text-sm font-bold text-foreground group-hover:text-primary transition-colors truncate">
                                                 {modelName}
                                             </div>
-                                            <div className="text-xs text-muted-foreground flex items-center gap-2">
+                                            <div className="text-[10px] sm:text-xs text-muted-foreground flex items-center gap-1 sm:gap-2">
                                                 <span className="text-green-600 dark:text-green-500 font-semibold">{stat.wins}W</span>
-                                                <span>·</span>
+                                                <span className="hidden sm:inline">·</span>
                                                 <span className="text-red-600 dark:text-red-400 font-semibold">{stat.losses}L</span>
-                                                <span>·</span>
-                                                <span>{stat.total} games</span>
+                                                <span className="hidden sm:inline">·</span>
+                                                <span className="hidden sm:inline">{stat.total} games</span>
                                             </div>
                                         </div>
                                     </div>
                                     
                                     {/* Win Rate */}
-                                    <div className="flex items-center gap-2">
-                                        <div className={`text-base font-bold px-3 py-1.5 rounded-lg shadow-sm border-2 ${
+                                    <div className="flex items-center gap-2 shrink-0">
+                                        <div className={`text-sm sm:text-base font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg shadow-sm border-2 ${
                                             stat.winRate >= 60 ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white border-green-600' :
                                             stat.winRate >= 50 ? 'bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/50' :
                                             stat.winRate >= 40 ? 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 border-yellow-500/50' :

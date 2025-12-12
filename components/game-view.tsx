@@ -73,29 +73,31 @@ export function GameView({ initialGameState }: GameViewProps) {
     <div className="min-h-screen bg-background text-foreground bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-background to-background">
       {/* Header */}
       <header className="border-b border-border/40 bg-card/30 backdrop-blur-xl sticky top-0 z-50 transition-all duration-300">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-lg shadow-primary/20">
-                <Brain className="h-7 w-7 text-white" />
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+              <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-lg shadow-primary/20 shrink-0">
+                <Brain className="h-5 w-5 sm:h-7 sm:w-7 text-white" />
               </div>
-              <div>
-                <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 tracking-tight">
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-xl lg:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 tracking-tight truncate">
                   AI Codenames Simulation
                 </h1>
-                <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  Comparing AI model performance
+                  <span className="hidden sm:inline">Comparing AI model performance</span>
+                  <span className="sm:hidden">AI Performance</span>
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <Badge
                 variant="outline"
-                className="px-4 py-1.5 h-auto text-sm gap-2 border-primary/20 bg-primary/5 text-primary font-medium hover:bg-primary/10 transition-colors"
+                className="px-2 sm:px-4 py-1 sm:py-1.5 h-auto text-xs sm:text-sm gap-1 sm:gap-2 border-primary/20 bg-primary/5 text-primary font-medium hover:bg-primary/10 transition-colors"
               >
-                <Sparkles className="h-4 w-4" />
-                AI vs AI
+                <Sparkles className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">AI vs AI</span>
+                <span className="sm:hidden">AI</span>
               </Badge>
             </div>
           </div>
@@ -103,11 +105,11 @@ export function GameView({ initialGameState }: GameViewProps) {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        {/* Top Section: Game Board & Log - Side by Side */}
-        <div className="flex gap-6 mb-8">
+      <main className="container mx-auto px-4 py-4 lg:py-8">
+        {/* Top Section: Game Board & Log - Side by Side on Desktop, Stacked on Mobile */}
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 mb-6 lg:mb-8">
           {/* Left Column: Controls & Board */}
-          <div className="flex-1 space-y-6" style={{ flexBasis: '75%' }}>
+          <div className="flex-1 space-y-4 lg:space-y-6 lg:min-w-0">
               <GameControls
                 isPlaying={isPlaying}
                 onPlayPause={() => {
@@ -127,44 +129,46 @@ export function GameView({ initialGameState }: GameViewProps) {
                 onBlueModelChange={setBlueModelId}
               />
               <GameStatus gameState={gameState} modelAName={redModelName} modelBName={blueModelName} />
-              <div className="flex justify-center">
+              <div className="flex justify-center overflow-x-auto">
                  <GameBoard board={gameState.board} showIdentity={true} disabled={true} />
               </div>
           </div>
 
-          {/* Right Column: Game Log */}
-          <div className="w-80 shrink-0" style={{ maxHeight: '800px' }}>
-             <GameLog history={gameState.history} redModelName={redModelName} blueModelName={blueModelName} />
+          {/* Right Column: Game Log - Full Width on Mobile, Fixed Width on Desktop */}
+          <div className="w-full lg:w-80 xl:w-96 lg:shrink-0">
+             <div className="h-[300px] sm:h-[400px] lg:h-[600px] xl:h-[700px]">
+               <GameLog history={gameState.history} redModelName={redModelName} blueModelName={blueModelName} />
+             </div>
           </div>
         </div>
 
         {/* Bottom Section: Stats & Analysis */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
              {/* Session Stats */}
-             <div className="space-y-4">
-                <h3 className="text-lg font-semibold flex items-center gap-2">
-                    <Trophy className="h-5 w-5 text-primary" />
+             <div className="space-y-3 lg:space-y-4">
+                <h3 className="text-base lg:text-lg font-semibold flex items-center gap-2">
+                    <Trophy className="h-4 lg:h-5 w-4 lg:w-5 text-primary" />
                     Session Stats
                 </h3>
                 <StatsPanel stats={stats} modelAName={redModelName} modelBName={blueModelName} />
              </div>
 
              {/* Global Leaderboard */}
-             <div className="space-y-4">
-                 <h3 className="text-lg font-semibold flex items-center gap-2">
-                     <Sparkles className="h-5 w-5 text-yellow-500" />
+             <div className="space-y-3 lg:space-y-4">
+                 <h3 className="text-base lg:text-lg font-semibold flex items-center gap-2">
+                     <Sparkles className="h-4 lg:h-5 w-4 lg:w-5 text-yellow-500" />
                      Global Leaderboard
                  </h3>
                  <Leaderboard stats={globalStats} />
              </div>
 
              {/* Match History */}
-             <div className="space-y-4">
-                <h3 className="text-lg font-semibold flex items-center gap-2">
-                    <Brain className="h-5 w-5 text-primary" />
+             <div className="space-y-3 lg:space-y-4">
+                <h3 className="text-base lg:text-lg font-semibold flex items-center gap-2">
+                    <Brain className="h-4 lg:h-5 w-4 lg:w-5 text-primary" />
                     Match History
                 </h3>
-                <div className="h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                <div className="h-[300px] sm:h-[350px] lg:h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                     <GameHistory stats={stats} />
                 </div>
             </div>
@@ -172,24 +176,24 @@ export function GameView({ initialGameState }: GameViewProps) {
 
           {/* Game Over Message */}
           {gameState.gameOver && showGameOverModal && (
-            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-40 p-4">
-              <div className="bg-card border-2 border-primary rounded-xl p-8 max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-40 p-3 sm:p-4">
+              <div className="bg-card border-2 border-primary rounded-xl p-6 sm:p-8 max-w-md w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
                 <Trophy
-                  className={`h-16 w-16 mx-auto mb-4 ${
+                  className={`h-12 w-12 sm:h-16 sm:w-16 mx-auto mb-3 sm:mb-4 ${
                     gameState.winner === "red" ? "text-[var(--red-team)]" : "text-[var(--blue-team)]"
                   }`}
                 />
-                <h2 className="text-3xl font-bold text-foreground mb-2">Game Over!</h2>
-                <p className="text-lg text-muted-foreground mb-6">
+                <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Game Over!</h2>
+                <p className="text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6">
                   {gameState.winner === "red" ? redModelName : blueModelName} Wins!
                 </p>
-                <div className="text-sm text-muted-foreground mb-8">Completed in {gameState.turnNumber} turns</div>
+                <div className="text-sm text-muted-foreground mb-6 sm:mb-8">Completed in {gameState.turnNumber} turns</div>
                 
-                <div className="flex gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                     <Button 
                         variant="outline" 
                         onClick={() => setShowGameOverModal(false)}
-                        className="flex-1"
+                        className="w-full sm:flex-1"
                     >
                         Close
                     </Button>
@@ -198,7 +202,7 @@ export function GameView({ initialGameState }: GameViewProps) {
                             startNewGame()
                             setShowGameOverModal(false) 
                         }}
-                        className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+                        className="w-full sm:flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
                     >
                         Play Again
                     </Button>

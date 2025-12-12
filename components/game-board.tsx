@@ -13,7 +13,7 @@ interface GameBoardProps {
 export function GameBoard({ board, showIdentity, onCardClick, disabled }: GameBoardProps) {
   return (
     <div className="w-full">
-      <div className="grid grid-cols-5 gap-2 md:gap-3">
+      <div className="grid grid-cols-5 gap-1.5 sm:gap-2 md:gap-3">
         {board.map((card, index) => (
           <GameCard
             key={`${card.word}-${index}`}
