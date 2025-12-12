@@ -1,0 +1,10 @@
+[
+  {
+    "redModelId": "gpt-4o",
+    "blueModelId": "claude-3-sonnet",
+    "winner": "blue",
+    "turns": 11,
+    "id": "exrtoq",
+    "timestamp": 1765543622989
+  }
+]
