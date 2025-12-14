@@ -74,6 +74,11 @@ export function GameLog({ history, redModelName, blueModelName }: GameLogProps) 
                     <div className="font-mono font-medium pl-3 sm:pl-5 text-xs sm:text-sm">
                       Gives clue: <span className="font-bold">{event.clue.word}</span> <span className="bg-primary/10 px-1 sm:px-1.5 py-0.5 rounded text-[10px] sm:text-xs">{event.clue.count}</span>
                     </div>
+                    {event.clue.reasoning && (
+                      <div className="mt-2 pl-3 sm:pl-5 text-[10px] sm:text-xs opacity-70 italic border-l-2 border-border/30 pl-2">
+                        💭 {event.clue.reasoning}
+                      </div>
+                    )}
                   </div>
                 )
               }
@@ -104,6 +109,11 @@ export function GameLog({ history, redModelName, blueModelName }: GameLogProps) 
                             {icon} <span className="hidden sm:inline">{status}</span>
                         </span>
                     </div>
+                    {event.guess.reasoning && (
+                      <div className="mt-2 pl-3 sm:pl-5 text-[10px] sm:text-xs opacity-70 italic border-l-2 border-border/30 pl-2">
+                        💭 {event.guess.reasoning}
+                      </div>
+                    )}
                   </div>
                 )
               }

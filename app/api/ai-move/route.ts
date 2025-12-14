@@ -15,9 +15,10 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({ type: "clue", clue })
     } else {
-      const guess = await getOperativeGuess(gameState, gameState.currentTeam, gameState.currentClue!, modelId)
+      const guessResult = await getOperativeGuess(gameState, gameState.currentTeam, gameState.currentClue!, modelId)
 
-      return NextResponse.json({ type: "guess", guess })
+      console.log('[API] Operative guess result:', { word: guessResult.word, reasoning: guessResult.reasoning })
+      return NextResponse.json({ type: "guess", guess: guessResult.word, reasoning: guessResult.reasoning })
     }
   } catch (error) {
     console.error("[v0] AI move API error:", error)

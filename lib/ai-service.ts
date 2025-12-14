@@ -74,9 +74,10 @@ RULES:
 - Avoid words that might lead to the ASSASSIN or opponent's words
 - Be strategic: more words = more risk but faster win
 
-OUTPUT FORMAT (respond ONLY with this format, no explanation):
+OUTPUT FORMAT (respond ONLY with this format):
 CLUE: [your one-word clue]
-COUNT: [number from 1-9]`
+COUNT: [number from 1-9]
+REASONING: [brief explanation of your strategy and why you chose this clue]`
 
   try {
     const { text } = await generateText({
@@ -87,14 +88,17 @@ COUNT: [number from 1-9]`
 
     const clueMatch = text.match(/CLUE:\s*(\w+)/i)
     const countMatch = text.match(/COUNT:\s*(\d+)/i)
+    const reasoningMatch = text.match(/REASONING:\s*(.+)/i)
 
     const word = clueMatch?.[1]?.toUpperCase() || "STRATEGY"
     const count = countMatch?.[1] ? Number.parseInt(countMatch[1], 10) : 1
+    const reasoning = reasoningMatch?.[1]?.trim()
 
     return {
       word,
       count: Math.min(Math.max(count, 1), 9),
       team,
+      reasoning,
     }
   } catch (error) {
     console.error("[v0] AI Spymaster error:", error)
@@ -107,7 +111,7 @@ export async function getOperativeGuess(
   team: TeamType,
   clue: Clue,
   modelId: string,
-): Promise<string> {
+): Promise<{ word: string; reasoning?: string }> {
   const unrevealedWords = state.board.filter((card) => !card.revealed).map((card) => card.word)
 
   const revealedWords = state.board.filter((card) => card.revealed).map((card) => `${card.word} (${card.type})`)
@@ -131,7 +135,8 @@ Consider:
 - Think about word associations and meanings
 
 OUTPUT FORMAT (respond ONLY with this format):
-GUESS: [one word from available words]`
+GUESS: [one word from available words]
+REASONING: [brief explanation of why you chose this word]`
 
   try {
     const { text } = await generateText({
@@ -140,19 +145,32 @@ GUESS: [one word from available words]`
       temperature: 0.7,
     })
 
+    console.log('[AI Service] Operative raw response:', text)
+
     const guessMatch = text.match(/GUESS:\s*(\w+)/i)
+    const reasoningMatch = text.match(/REASONING:\s*(.+)/i)
+    
     const guess = guessMatch?.[1]?.toUpperCase()
+    const reasoning = reasoningMatch?.[1]?.trim()
+
+    console.log('[AI Service] Parsed operative:', { guess, reasoning, hasReasoning: !!reasoning })
 
     // Validate guess is on board
     if (guess && unrevealedWords.includes(guess)) {
-      return guess
+      return { word: guess, reasoning }
     }
 
     // Fallback to random unrevealed word
-    return unrevealedWords[Math.floor(Math.random() * unrevealedWords.length)]
+    return { 
+      word: unrevealedWords[Math.floor(Math.random() * unrevealedWords.length)],
+      reasoning: undefined
+    }
   } catch (error) {
     console.error("[v0] AI Operative error:", error)
     const unrevealedWords = state.board.filter((card) => !card.revealed).map((card) => card.word)
-    return unrevealedWords[Math.floor(Math.random() * unrevealedWords.length)]
+    return { 
+      word: unrevealedWords[Math.floor(Math.random() * unrevealedWords.length)],
+      reasoning: undefined
+    }
   }
 }

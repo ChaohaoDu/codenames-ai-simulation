@@ -3,7 +3,7 @@
 import { AI_MODELS } from "@/lib/ai-service"
 import { initializeGame, revealCard, switchTurn } from "@/lib/game-engine"
 import type { Clue, GameResult, GameState, GameStats } from "@/lib/types"
-import type { ModelStat } from "@/lib/storage"
+import type { ModelStat } from "@/lib/db"
 import { useCallback, useRef, useState, useEffect } from "react"
 
 export function useGameSimulation(initialGameState?: GameState) {
@@ -78,6 +78,8 @@ export function useGameSimulation(initialGameState?: GameState) {
         }))
       } else if (data.type === "guess") {
         const guess: string = data.guess
+        const reasoning: string | undefined = data.reasoning
+        console.log('[GameSim] Received guess:', { guess, reasoning, dataType: typeof reasoning })
         const cardIndex = gameState.board.findIndex((card) => card.word === guess)
 
         if (cardIndex !== -1) {
@@ -91,10 +93,12 @@ export function useGameSimulation(initialGameState?: GameState) {
                     word: guess,
                     correct: isCorrect,
                     type: card.type,
-                    team: gameState.currentTeam
+                    team: gameState.currentTeam,
+                    reasoning
                 },
                 timestamp: Date.now()
             }
+            console.log('[GameSim] Created guess event:', guessEvent)
 
           const newState = revealCard(gameState, cardIndex)
           
@@ -224,6 +228,7 @@ export function useGameSimulation(initialGameState?: GameState) {
               await new Promise((resolve) => setTimeout(resolve, speed / 2))
             } else if (data.type === "guess") {
               const guess: string = data.guess
+              const reasoning: string | undefined = data.reasoning
               const cardIndex = currentState.board.findIndex((card) => card.word === guess)
 
               if (cardIndex !== -1) {
@@ -237,7 +242,8 @@ export function useGameSimulation(initialGameState?: GameState) {
                         word: guess,
                         correct: isCorrect,
                         type: card.type,
-                        team: currentState.currentTeam
+                        team: currentState.currentTeam,
+                        reasoning
                     },
                     timestamp: Date.now()
                 }

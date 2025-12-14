@@ -12,6 +12,7 @@ export interface Clue {
   word: string
   count: number
   team: TeamType
+  reasoning?: string
 }
 
 export interface Guess {
@@ -19,6 +20,7 @@ export interface Guess {
   correct: boolean
   type: CardType
   team: TeamType
+  reasoning?: string
 }
 
 export interface GameState {
